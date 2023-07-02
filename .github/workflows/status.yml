@@ -25,8 +25,9 @@ jobs:
           )
           for site in ${sites[*]}
           do
-            echo $(date +"%Y-%m-%dT%H:%M:%S%:z")',' $site',' $(curl -LIs $site -o /dev/null -w '%{http_code}')
+            echo $(date +"%Y-%m-%dT%H:%M:%S%:z")',' $site',' $(curl -LIs $site -o /dev/null -w '%{http_code}') >> sites.csv
           done
+          cat sitestatus.csv
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Capture status check results
