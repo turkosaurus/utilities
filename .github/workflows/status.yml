@@ -18,13 +18,16 @@ jobs:
         run: |
           sites=(
             'https://www.turkosaur.us'
-             'https://nailivic.herokuapp.com/login'
+            'https://nailivic.herokuapp.com/login'
           )
           for site in ${sites[*]}
-          do
-            echo $(date +"%Y-%m-%dT%H:%M:%S%:z")',' $site',' $(curl -LIs $site -o /dev/null -w '%{http_code}') >> status.csv
-          done
-          cat status.csv
+            do
+              response=$(curl -LIs $site -o /dev/null -w '%{http_code}')
+              echo $(date +"%Y-%m-%dT%H:%M:%S%:z")',' $response',' $site >> status.csv
+              if [ "$response" != 200 ]; then
+                echo ERROR:$site #TODO have this trigger an alert
+              fi
+            done
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Capture status check results
