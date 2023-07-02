@@ -19,7 +19,10 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Check and record website status and ISO-3166 timestamp
         run: |
-          sites=('https://www.turkosaur.us' 'https://www.google.com')
+          sites=(
+            'https://www.turkosaur.us'
+            'https://www.google.com'
+          )
           for site in ${sites[*]}
           do
             echo $(date +"%Y-%m-%dT%H:%M:%S%:z")',' $site',' $(curl -LIs $site -o /dev/null -w '%{http_code}')
