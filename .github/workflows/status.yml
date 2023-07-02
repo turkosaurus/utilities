@@ -21,7 +21,7 @@ jobs:
         run: |
           for site in https://www.turkosaur.us https://www.google.com
           do
-            echo $(curl -LIs $site -o /dev/null -w '%{http_code}\n')
+            echo $(curl -LIs $site -o /dev/null -w '%{http_code} $(date) $(site)\n')
           done
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
